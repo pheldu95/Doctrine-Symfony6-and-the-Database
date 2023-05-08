@@ -39,7 +39,7 @@ class VinylController extends AbstractController
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
 
         //using doctrine to gives us mixes in order of most upvotes
-        $mixes = $mixRepository->findBy([], ['votes' => 'DESC']);
+        $mixes = $mixRepository->findAllOrderedByVotes();
 
         return $this->render('vinyl/browse.html.twig', [
             'genre' => $genre,
