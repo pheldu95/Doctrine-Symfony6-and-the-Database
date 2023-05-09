@@ -43,7 +43,7 @@ class MixController extends AbstractController
     }
 
     #[Route('/mix/{id}/vote', name: 'app_mix_vote', methods: ['POST'])]
-    public function vote(VinylMix $mix, Request $request): Response
+    public function vote(VinylMix $mix, Request $request, EntityManagerInterface $entityManager): Response
     {
         //we can read post data by doing this $request->request->get('key'');
         //the second argument, 'up', is the default. will only happen if there is no post data with direction. shouldn't ever happen
@@ -53,6 +53,13 @@ class MixController extends AbstractController
         }else{
             $mix->setVotes($mix->getVotes() - 1);
         }
-        dd($mix);
+
+        //this is all you have to do to update a value in a column...wooah
+        $entityManager->flush();
+
+        //redirectToRoute is a Response object
+        return $this->redirectToRoute('app_mix_show', [
+            'id' => $mix->getId(),
+        ]);
     }
 }
