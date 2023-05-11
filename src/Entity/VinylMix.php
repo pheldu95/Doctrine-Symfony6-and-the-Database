@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Repository\VinylMixRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: VinylMixRepository::class)]
 //class is named VinylMix, so Doctrine will look for a table called vinyl_mix
 class VinylMix
 {
+//    this is called a trait. it makes this entity able to use timestampable... duh
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
@@ -28,16 +32,7 @@ class VinylMix
     private ?string $genre = null;
 
     #[ORM\Column]
-    private \DateTimeImmutable $createdAt;
-
-    #[ORM\Column]
     private int $votes = 0;
-
-    //createdAt property will automatically be set anytime we instantiate a VinylMix object
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
 
     public function getId(): ?int
     {
@@ -88,18 +83,6 @@ class VinylMix
     public function setGenre(string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
