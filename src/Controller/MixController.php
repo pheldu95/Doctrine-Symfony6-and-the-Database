@@ -49,9 +49,9 @@ class MixController extends AbstractController
         //the second argument, 'up', is the default. will only happen if there is no post data with direction. shouldn't ever happen
         $direction = $request->request->get('direction', 'up');
         if($direction === 'up'){
-            $mix->setVotes($mix->getVotes() + 1);
+            $mix->upVote();
         }else{
-            $mix->setVotes($mix->getVotes() - 1);
+            $mix->downVote();
         }
 
         //this is all you have to do to update a value in a column...wooah
