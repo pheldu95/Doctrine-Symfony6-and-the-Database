@@ -33,7 +33,7 @@ class MixController extends AbstractController
         ));
     }
 
-    #[Route('/mix/{id}', name: 'app_mix_show')]
+    #[Route('/mix/{slug}', name: 'app_mix_show')]
     //when you type hint for an entity class, symfony querries for the object automatically to DB
     public function show(VinylMix $mix): Response
     {
@@ -61,7 +61,7 @@ class MixController extends AbstractController
 
         //redirectToRoute is a Response object
         return $this->redirectToRoute('app_mix_show', [
-            'id' => $mix->getId(),
+            'slug' => $mix->getSlug(),
         ]);
     }
 }
