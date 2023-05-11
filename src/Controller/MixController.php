@@ -57,6 +57,8 @@ class MixController extends AbstractController
         //this is all you have to do to update a value in a column...wooah
         $entityManager->flush();
 
+        $this->addFlash('success', 'Vote counted!');
+
         //redirectToRoute is a Response object
         return $this->redirectToRoute('app_mix_show', [
             'id' => $mix->getId(),

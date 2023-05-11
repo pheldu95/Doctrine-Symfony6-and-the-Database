@@ -56,6 +56,13 @@
             <!-- End Main Navigation -->
         </div>
 
+{#        read all of our success flash message and render them (coming from MixController)#}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
 
         <!-- Footer -->
