@@ -6,6 +6,7 @@ use App\Repository\VinylMixRepository;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\String\u;
@@ -36,7 +37,7 @@ class VinylController extends AbstractController
     }
 
     #[Route('/browse/{slug}', name: 'app_browse')]
-    public function browse( VinylMixRepository $mixRepository, string $slug = null): Response
+    public function browse( VinylMixRepository $mixRepository, Request $request,string $slug = null): Response
     {
         $genre = $slug ? u(str_replace('-', ' ', $slug))->title(true) : null;
 
@@ -44,7 +45,7 @@ class VinylController extends AbstractController
         $adapter = new QueryAdapter($queryBuilder);
         $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
             $adapter,
-            1,
+            $request->query->get('page', 1),
             9
         );
 
